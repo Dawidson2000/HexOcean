@@ -33,7 +33,7 @@ const Dishesform: FC = () => {
             render={({ handleSubmit, values }) => (
                 <StyledForm onSubmit={handleSubmit}>
                     <InputWrapper>
-                        <label>First Name</label>
+                        <label>Name</label>
                         <Field name='name' validate={required}>
                             {props => (
                                 <>
