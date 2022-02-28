@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Input from "../UI/Input";
 import InputWrapper from "../UI/InputWrapper";
 import Select from "../UI/Select";
+import SubmitButton from "../UI/SubmitButton";
 
 const Form = styled.form`
     max-width: 500px;
@@ -35,6 +36,7 @@ const Dishesform: FC = () => {
                     <option value={'sandwich'}>sandwich</option>
                 </Select>
             </InputWrapper>
+            <SubmitButton type='submit'>Submit</SubmitButton>
         </Form>
     )
 };
