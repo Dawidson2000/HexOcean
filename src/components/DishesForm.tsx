@@ -27,13 +27,13 @@ const Dishesform: FC = () => {
     return (
         <Form
             onSubmit={onSubmit}
-            render={({ handleSubmit }) => (
+            render={({ handleSubmit, values }) => (
                 <StyledForm onSubmit={handleSubmit}>
                     <InputWrapper>
                         <label>First Name</label>
                         <Field name='name'>
                             {props => (
-                                <Input id='name' type='text' onChange={props.input.onChange} value={props.input.value}/>
+                                <Input id='name' type='text' onChange={props.input.onChange} value={props.input.value} />
                             )}
                         </Field>
                     </InputWrapper>
@@ -41,7 +41,7 @@ const Dishesform: FC = () => {
                         <label>Prepaparation Time</label>
                         <Field name='preparation_time'>
                             {props => (
-                                <Input id='preparation_time' type='time' step='1' onChange={props.input.onChange} value={props.input.value}/>
+                                <Input id='preparation_time' type='time' step='1' onChange={props.input.onChange} value={props.input.value} />
                             )}
                         </Field>
                     </InputWrapper>
@@ -50,6 +50,7 @@ const Dishesform: FC = () => {
                         <Field name='type'>
                             {props => (
                                 <Select id='type' name='type' value={props.input.value} onChange={props.input.onChange}>
+                                    <option />
                                     <option value={'pizza'}>pizza</option>
                                     <option value={'soup'}>soup</option>
                                     <option value={'sandwich'}>sandwich</option>
@@ -57,6 +58,63 @@ const Dishesform: FC = () => {
                             )}
                         </Field>
                     </InputWrapper>
+
+                    {values.type === 'pizza' && 
+                        <>
+                            <InputWrapper>
+                                <label>Number of slices</label>
+                                <Field name='no_of_slices'>
+                                    {props => (
+                                        <Input id='no_of_slices' type='number' onChange={props.input.onChange} value={props.input.value} />
+                                    )}
+                                </Field>
+                            </InputWrapper> 
+                            
+                            <InputWrapper>
+                                <label>Diameter</label>   
+                                <Field name='diameter'>
+                                    {props => (
+                                        <Input id='diameter' type='number' onChange={props.input.onChange} value={props.input.value} />
+                                    )}
+                                </Field>
+                            </InputWrapper>
+                        </>
+                    }
+
+                    {values.type === 'soup' &&
+                        <InputWrapper>
+                            <label>Spiciness</label>
+                            <Field name='spiciness_scale'>
+                                {props => (
+                                    <Select id='spiciness_scale' name='spiciness_scale' value={props.input.value} onChange={props.input.onChange}>
+                                        <option />
+                                        <option value={1}>1</option>
+                                        <option value={2}>2</option>
+                                        <option value={3}>3</option>
+                                        <option value={4}>4</option>
+                                        <option value={5}>5</option>
+                                        <option value={6}>6</option>
+                                        <option value={7}>7</option>
+                                        <option value={8}>8</option>
+                                        <option value={9}>9</option>
+                                        <option value={10}>10</option>
+                                    </Select>
+                                )}
+                            </Field>
+                        </InputWrapper>
+                    }
+
+                    {values.type === 'sandwich' &&
+                        <InputWrapper>
+                            <label>Number of slices of bread</label>
+                            <Field name='slices_of_bread'>
+                                {props => (
+                                    <Input id='slices_of_bread' type='number' onChange={props.input.onChange} value={props.input.value} />
+                                )}
+                            </Field>
+                        </InputWrapper>
+                    }
+
                     <SubmitButton type='submit'>Submit</SubmitButton>
                 </StyledForm>
             )}
