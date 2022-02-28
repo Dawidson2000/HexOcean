@@ -9,6 +9,11 @@ const InputWrapper = styled.div`
         font-size: 0.9rem;
         color: ${Colors.mainThemeColor};
     }
+
+    & span {
+        font-size: 0.8rem;
+        color: red;
+    }
 `;
 
 export default InputWrapper;
