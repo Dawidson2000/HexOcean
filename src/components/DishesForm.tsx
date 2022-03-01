@@ -50,12 +50,16 @@ const Dishesform: FC = () => {
         }, applyResponse);
     };
 
-    const required = (value: string | number) => (value ? undefined : 'Required')
+    const required = (value: string | number) => {
+        console.log(value);
+        if(value === 0) return undefined;
+        return value ? undefined : 'Required';
+    }
 
     return (
         <Form
             onSubmit={onSubmit}
-            render={({ handleSubmit, form}) => (
+            render={({ handleSubmit}) => (
                 <StyledForm onSubmit={handleSubmit}>
                     <InputWrapper>
                         <label>Name</label>
@@ -158,7 +162,6 @@ const Dishesform: FC = () => {
                     </Condition>
 
                     <SubmitButton type='submit'>Submit</SubmitButton>
-                    {/* <span>{error.slices_of_bread}</span> */}
                 </StyledForm>
             )}
         />
