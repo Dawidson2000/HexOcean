@@ -10,6 +10,7 @@ const SubmitButton = styled.button`
     color: white;
     cursor: pointer;
     font-size: 0.9rem;
+    height: 30px;
 `;
 
 export default SubmitButton;

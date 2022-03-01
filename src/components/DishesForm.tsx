@@ -162,8 +162,7 @@ const Dishesform: FC = () => {
                         </InputWrapper>
                     </Condition>
 
-                    <SubmitButton type='submit'>Submit</SubmitButton>
-                    {isLoading && <LoadingScreen/>}
+                    <SubmitButton type='submit'>{isLoading ? <LoadingScreen/> : 'Submit'}</SubmitButton>
                 </StyledForm>
             )}
         />
