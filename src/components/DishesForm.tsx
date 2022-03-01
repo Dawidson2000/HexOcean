@@ -24,21 +24,18 @@ const StyledForm = styled.form`
 const Dishesform: FC = () => {
     const { error, isLoading, sendRequest: sendData } = useHttp();
 
-    const required = (value: string | number) => (value ? undefined : 'Required')
-
-  
-    const onSubmit = async (values: any) => {
+    const onSubmit = async (values: any, form: any) => {
         const applyResponse = (obj: any) => {
         };
 
-        const parsingValues = {...values};
+        const parsingValues = { ...values };
 
-        for(const prop in parsingValues){
+        for (const prop in parsingValues) {
             let actualProp = parsingValues[prop];
             const parsedProp = isNaN(actualProp) ? actualProp : parseFloat(actualProp);
-            values[prop] = parsedProp;          
+            values[prop] = parsedProp;
         }
-    
+
         sendData({
             url: 'https://frosty-wood-6558.getsandbox.com:443/dishes',
             method: 'POST',
@@ -47,7 +44,17 @@ const Dishesform: FC = () => {
                 'Content-Type': 'application/json',
             }
         }, applyResponse);
+
+        form.reset();
     };
+
+    const required = (value: string | number) => (value ? undefined : 'Required')
+
+    const Condition = ({ when, is, children }: { when: string, is: string | boolean | number, children: any }) => (
+        <Field name={when} subscription={{ value: true }}>
+            {({ input: { value } }) => (value === is ? children : null)}
+        </Field>
+    )
 
     return (
         <Form
@@ -93,35 +100,33 @@ const Dishesform: FC = () => {
                         </Field>
                     </InputWrapper>
 
-                    {values.type === 'pizza' &&
-                        <>
-                            <InputWrapper>
-                                <label>Number of slices</label>
-                                <Field name='no_of_slices' validate={required}>
-                                    {props => (
-                                        <>
-                                            <Input id='no_of_slices' type='number' onChange={props.input.onChange} value={props.input.value} />
-                                            {props.meta.error && props.meta.touched && <span>{props.meta.error}</span>}
-                                        </>
-                                    )}
-                                </Field>
-                            </InputWrapper>
+                    <Condition when='type' is='pizza'>
+                        <InputWrapper>
+                            <label>Number of slices</label>
+                            <Field name='no_of_slices' validate={required}>
+                                {props => (
+                                    <>
+                                        <Input id='no_of_slices' type='number' onChange={props.input.onChange} value={props.input.value} />
+                                        {props.meta.error && props.meta.touched && <span>{props.meta.error}</span>}
+                                    </>
+                                )}
+                            </Field>
+                        </InputWrapper>
 
-                            <InputWrapper>
-                                <label>Diameter</label>
-                                <Field name='diameter' validate={required}>
-                                    {props => (
-                                        <>
-                                            <Input id='diameter' type='number' onChange={props.input.onChange} value={props.input.value} />
-                                            {props.meta.error && props.meta.touched && <span>{props.meta.error}</span>}
-                                        </>
-                                    )}
-                                </Field>
-                            </InputWrapper>
-                        </>
-                    }
+                        <InputWrapper>
+                            <label>Diameter</label>
+                            <Field name='diameter' validate={required}>
+                                {props => (
+                                    <>
+                                        <Input id='diameter' type='number' onChange={props.input.onChange} value={props.input.value} />
+                                        {props.meta.error && props.meta.touched && <span>{props.meta.error}</span>}
+                                    </>
+                                )}
+                            </Field>
+                        </InputWrapper>
+                    </Condition>
 
-                    {values.type === 'soup' &&
+                    <Condition when='type' is='soup'>
                         <InputWrapper>
                             <label>Spiciness</label>
                             <Field name='spiciness_scale' validate={required}>
@@ -133,9 +138,9 @@ const Dishesform: FC = () => {
                                 )}
                             </Field>
                         </InputWrapper>
-                    }
-
-                    {values.type === 'sandwich' &&
+                    </Condition>
+                    
+                    <Condition when='type' is='sandwich'>
                         <InputWrapper>
                             <label>Number of slices of bread</label>
                             <Field name='slices_of_bread' validate={required}>
@@ -147,7 +152,7 @@ const Dishesform: FC = () => {
                                 )}
                             </Field>
                         </InputWrapper>
-                    }
+                    </Condition>
 
                     <SubmitButton type='submit'>Submit</SubmitButton>
                 </StyledForm>
