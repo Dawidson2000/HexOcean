@@ -4,6 +4,7 @@ import Input from "../UI/Input";
 import InputWrapper from "../UI/InputWrapper";
 import Select from "../UI/Select";
 import SubmitButton from "../UI/SubmitButton";
+import Condition from "./Condition";
 
 import { Form, Field } from 'react-final-form';
 import type Dish from "../modals/dish-type";
@@ -49,12 +50,6 @@ const Dishesform: FC = () => {
     };
 
     const required = (value: string | number) => (value ? undefined : 'Required')
-
-    const Condition = ({ when, is, children }: { when: string, is: string | boolean | number, children: any }) => (
-        <Field name={when} subscription={{ value: true }}>
-            {({ input: { value } }) => (value === is ? children : null)}
-        </Field>
-    )
 
     return (
         <Form
