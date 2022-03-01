@@ -9,6 +9,7 @@ import Condition from "./Condition";
 import { Form, Field } from 'react-final-form';
 import type Dish from "../modals/dish-type";
 import useHttp from "../hooks/use-http";
+import { LoadingScreen } from "../UI/LoadingScreen";
 
 const StyledForm = styled.form`
     max-width: 500px;
@@ -162,6 +163,7 @@ const Dishesform: FC = () => {
                     </Condition>
 
                     <SubmitButton type='submit'>Submit</SubmitButton>
+                    {isLoading && <LoadingScreen/>}
                 </StyledForm>
             )}
         />
