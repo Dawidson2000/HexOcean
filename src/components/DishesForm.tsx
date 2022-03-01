@@ -91,10 +91,9 @@ const Dishesform: FC = () => {
                             {props => (
                                 <>
                                     <Select id='type' name='type' value={props.input.value} onChange={props.input.onChange}>
-                                        <option />
-                                        <option value={'pizza'}>pizza</option>
-                                        <option value={'soup'}>soup</option>
-                                        <option value={'sandwich'}>sandwich</option>
+                                        <option value={'pizza'}>🍕Pizza</option>
+                                        <option value={'soup'}>🍛Soup</option>
+                                        <option value={'sandwich'}>🥪Sandwich</option>
                                     </Select>
                                     <Error name='type' errorMessage={errorMessage}/>
                                 </>
