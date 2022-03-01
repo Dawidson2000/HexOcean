@@ -11,6 +11,7 @@ import type Dish from "../modals/dish-type";
 import useHttp from "../hooks/use-http";
 import { LoadingScreen } from "../UI/LoadingScreen";
 import Error from "./Error";
+import { FormApi } from "final-form";
 
 const StyledForm = styled.form`
     max-width: 500px;
@@ -28,7 +29,7 @@ const Dishesform: FC = () => {
     const { error, isLoading, sendRequest: sendData } = useHttp();
     const errorMessage = JSON.parse(error);
 
-    const onSubmit = async (values: any, form: any, ) => {
+    const onSubmit = async (values: Dish, form: FormApi<Dish, Partial<Dish>>, ) => {
         const applyResponse = (obj: any) => {
             console.log(obj);       
             form.restart();
@@ -37,11 +38,12 @@ const Dishesform: FC = () => {
         const parsingValues = { ...values };
 
         for (const prop in parsingValues) {
-            let actualProp = parsingValues[prop];
-            const parsedProp = isNaN(actualProp) ? actualProp : parseFloat(actualProp);
-            values[prop] = parsedProp;
+            const actualProp = parsingValues[prop as keyof typeof values];
+            const parsedProp = isNaN(actualProp as number) ? 
+                actualProp : parseFloat(actualProp as string);
+            (values as any)[prop] = parsedProp;
         }
-
+        
        sendData({
             url: 'https://frosty-wood-6558.getsandbox.com:443/dishes',
             method: 'POST',
@@ -53,7 +55,6 @@ const Dishesform: FC = () => {
     };
 
     const required = (value: string | number) => {
-        console.log(value);
         if(value === 0) return undefined;
         return value ? undefined : 'Required';
     }
@@ -61,7 +62,7 @@ const Dishesform: FC = () => {
     return (
         <Form
             onSubmit={onSubmit}
-            render={({ handleSubmit}) => (
+            render={({ handleSubmit, form}) => (
                 <StyledForm onSubmit={handleSubmit}>
                     <InputWrapper>
                         <label>Name</label>
@@ -91,6 +92,7 @@ const Dishesform: FC = () => {
                             {props => (
                                 <>
                                     <Select id='type' name='type' value={props.input.value} onChange={props.input.onChange}>
+                                        <option/>
                                         <option value={'pizza'}>🍕Pizza</option>
                                         <option value={'soup'}>🍛Soup</option>
                                         <option value={'sandwich'}>🥪Sandwich</option>
