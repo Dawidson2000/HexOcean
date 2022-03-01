@@ -2,9 +2,9 @@ import { useState, useCallback } from "react";
 
 const useHttp = () => {
     const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState(null);
+    const [error, setError] = useState<any>(null);
 
-    const sendRequest = useCallback(async(requestConfig, applyData) => {
+    const sendRequest = useCallback(async (requestConfig, applyData) => {
         setIsLoading(true);
         setError(null);
         try {
@@ -18,7 +18,9 @@ const useHttp = () => {
             );
 
             if (!response.ok) {
-                throw new Error('Request failed!');
+                await response.text().then(text => {
+                    throw new Error(text)
+                })
             }
 
             const data = await response.json();

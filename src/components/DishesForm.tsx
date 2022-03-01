@@ -24,11 +24,14 @@ const StyledForm = styled.form`
 
 const Dishesform: FC = () => {
     const { error, isLoading, sendRequest: sendData } = useHttp();
+    const errorMessage = JSON.parse(error);
 
-    const onSubmit = async (values: any, form: any) => {
+    const onSubmit = async (values: any, form: any, ) => {
         const applyResponse = (obj: any) => {
+            console.log(obj);       
+            form.restart();
         };
-
+        
         const parsingValues = { ...values };
 
         for (const prop in parsingValues) {
@@ -37,7 +40,7 @@ const Dishesform: FC = () => {
             values[prop] = parsedProp;
         }
 
-        sendData({
+       sendData({
             url: 'https://frosty-wood-6558.getsandbox.com:443/dishes',
             method: 'POST',
             body: values,
@@ -45,8 +48,6 @@ const Dishesform: FC = () => {
                 'Content-Type': 'application/json',
             }
         }, applyResponse);
-
-        form.reset();
     };
 
     const required = (value: string | number) => (value ? undefined : 'Required')
@@ -54,7 +55,7 @@ const Dishesform: FC = () => {
     return (
         <Form
             onSubmit={onSubmit}
-            render={({ handleSubmit, values }) => (
+            render={({ handleSubmit, form}) => (
                 <StyledForm onSubmit={handleSubmit}>
                     <InputWrapper>
                         <label>Name</label>
@@ -63,6 +64,7 @@ const Dishesform: FC = () => {
                                 <>
                                     <Input id='name' type='text' onChange={props.input.onChange} value={props.input.value} />
                                     {props.meta.error && props.meta.touched && <span>{props.meta.error}</span>}
+                                    {<span>{errorMessage?.name}</span>}
                                 </>
                             )}
                         </Field>
@@ -74,6 +76,7 @@ const Dishesform: FC = () => {
                                 <>
                                     <Input id='preparation_time' type='time' step='1' onChange={props.input.onChange} value={props.input.value} />
                                     {props.meta.error && props.meta.touched && <span>{props.meta.error}</span>}
+                                    {<span>{errorMessage?.preparation_time}</span>}
                                 </>
                             )}
                         </Field>
@@ -90,6 +93,7 @@ const Dishesform: FC = () => {
                                         <option value={'sandwich'}>sandwich</option>
                                     </Select>
                                     {props.meta.error && props.meta.touched && <span>{props.meta.error}</span>}
+                                    {<span>{errorMessage?.type}</span>}
                                 </>
                             )}
                         </Field>
@@ -103,6 +107,7 @@ const Dishesform: FC = () => {
                                     <>
                                         <Input id='no_of_slices' type='number' onChange={props.input.onChange} value={props.input.value} />
                                         {props.meta.error && props.meta.touched && <span>{props.meta.error}</span>}
+                                        {<span>{errorMessage?.no_of_slices}</span>}
                                     </>
                                 )}
                             </Field>
@@ -115,6 +120,7 @@ const Dishesform: FC = () => {
                                     <>
                                         <Input id='diameter' type='number' onChange={props.input.onChange} value={props.input.value} />
                                         {props.meta.error && props.meta.touched && <span>{props.meta.error}</span>}
+                                        {<span>{errorMessage?.diameter}</span>}
                                     </>
                                 )}
                             </Field>
@@ -129,6 +135,7 @@ const Dishesform: FC = () => {
                                     <>
                                         <Input type='range' min={1} max={10} step={1} onChange={props.input.onChange} value={props.input.value} />
                                         {props.meta.error && props.meta.touched && <span>{props.meta.error}</span>}
+                                        {<span>{errorMessage?.spiciness_scale}</span>}
                                     </>
                                 )}
                             </Field>
@@ -143,6 +150,7 @@ const Dishesform: FC = () => {
                                     <>
                                         <Input id='slices_of_bread' type='number' onChange={props.input.onChange} value={props.input.value} />
                                         {props.meta.error && props.meta.touched && <span>{props.meta.error}</span>}
+                                        {<span>{errorMessage?.slices_of_bread}</span>}
                                     </>
                                 )}
                             </Field>
@@ -150,6 +158,7 @@ const Dishesform: FC = () => {
                     </Condition>
 
                     <SubmitButton type='submit'>Submit</SubmitButton>
+                    {/* <span>{error.slices_of_bread}</span> */}
                 </StyledForm>
             )}
         />
