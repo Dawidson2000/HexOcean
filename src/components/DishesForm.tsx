@@ -7,6 +7,7 @@ import SubmitButton from "../UI/SubmitButton";
 
 import { Form, Field } from 'react-final-form';
 import type Dish from "../modals/dish-type";
+import useHttp from "../hooks/use-http";
 
 const StyledForm = styled.form`
     max-width: 500px;
@@ -21,10 +22,31 @@ const StyledForm = styled.form`
 `;
 
 const Dishesform: FC = () => {
-    const required = (value: any) => (value ? undefined : 'Required')
+    const { error, isLoading, sendRequest: sendData } = useHttp();
 
-    const onSubmit = async (values: Dish) => {
-        console.log(values);
+    const required = (value: string | number) => (value ? undefined : 'Required')
+
+  
+    const onSubmit = async (values: any) => {
+        const applyResponse = (obj: any) => {
+        };
+
+        const parsingValues = {...values};
+
+        for(const prop in parsingValues){
+            let actualProp = parsingValues[prop];
+            const parsedProp = isNaN(actualProp) ? actualProp : parseFloat(actualProp);
+            values[prop] = parsedProp;          
+        }
+    
+        sendData({
+            url: 'https://frosty-wood-6558.getsandbox.com:443/dishes',
+            method: 'POST',
+            body: values,
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        }, applyResponse);
     };
 
     return (
@@ -44,7 +66,7 @@ const Dishesform: FC = () => {
                         </Field>
                     </InputWrapper>
                     <InputWrapper>
-                        <label>Prepaparation Time</label>
+                        <label>Preparation time</label>
                         <Field name='preparation_time' validate={required}>
                             {props => (
                                 <>
@@ -105,19 +127,7 @@ const Dishesform: FC = () => {
                             <Field name='spiciness_scale' validate={required}>
                                 {props => (
                                     <>
-                                        <Select id='spiciness_scale' name='spiciness_scale' value={props.input.value} onChange={props.input.onChange}>
-                                            <option />
-                                            <option value={1}>1</option>
-                                            <option value={2}>2</option>
-                                            <option value={3}>3</option>
-                                            <option value={4}>4</option>
-                                            <option value={5}>5</option>
-                                            <option value={6}>6</option>
-                                            <option value={7}>7</option>
-                                            <option value={8}>8</option>
-                                            <option value={9}>9</option>
-                                            <option value={10}>10</option>
-                                        </Select>
+                                        <Input type='range' min={1} max={10} step={1} onChange={props.input.onChange} value={props.input.value} />
                                         {props.meta.error && props.meta.touched && <span>{props.meta.error}</span>}
                                     </>
                                 )}
