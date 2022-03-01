@@ -10,6 +10,7 @@ import { Form, Field } from 'react-final-form';
 import type Dish from "../modals/dish-type";
 import useHttp from "../hooks/use-http";
 import { LoadingScreen } from "../UI/LoadingScreen";
+import Error from "./Error";
 
 const StyledForm = styled.form`
     max-width: 500px;
@@ -68,8 +69,7 @@ const Dishesform: FC = () => {
                             {props => (
                                 <>
                                     <Input id='name' type='text' onChange={props.input.onChange} value={props.input.value} />
-                                    {props.meta.error && props.meta.touched && <span>{props.meta.error}</span>}
-                                    {<span>{errorMessage?.name}</span>}
+                                    <Error name='name' errorMessage={errorMessage}/>
                                 </>
                             )}
                         </Field>
@@ -80,8 +80,7 @@ const Dishesform: FC = () => {
                             {props => (
                                 <>
                                     <Input id='preparation_time' type='time' step='1' onChange={props.input.onChange} value={props.input.value} />
-                                    {props.meta.error && props.meta.touched && <span>{props.meta.error}</span>}
-                                    {<span>{errorMessage?.preparation_time}</span>}
+                                    <Error name='preparation_time'  errorMessage={errorMessage}/>
                                 </>
                             )}
                         </Field>
@@ -97,8 +96,7 @@ const Dishesform: FC = () => {
                                         <option value={'soup'}>soup</option>
                                         <option value={'sandwich'}>sandwich</option>
                                     </Select>
-                                    {props.meta.error && props.meta.touched && <span>{props.meta.error}</span>}
-                                    {<span>{errorMessage?.type}</span>}
+                                    <Error name='type' errorMessage={errorMessage}/>
                                 </>
                             )}
                         </Field>
@@ -111,8 +109,7 @@ const Dishesform: FC = () => {
                                 {props => (
                                     <>
                                         <Input id='no_of_slices' type='number' onChange={props.input.onChange} value={props.input.value} />
-                                        {props.meta.error && props.meta.touched && <span>{props.meta.error}</span>}
-                                        {<span>{errorMessage?.no_of_slices}</span>}
+                                        <Error name='no_of_slices' errorMessage={errorMessage}/>
                                     </>
                                 )}
                             </Field>
@@ -124,8 +121,7 @@ const Dishesform: FC = () => {
                                 {props => (
                                     <>
                                         <Input id='diameter' type='number' onChange={props.input.onChange} value={props.input.value} />
-                                        {props.meta.error && props.meta.touched && <span>{props.meta.error}</span>}
-                                        {<span>{errorMessage?.diameter}</span>}
+                                        <Error name='diameter' errorMessage={errorMessage}/>
                                     </>
                                 )}
                             </Field>
@@ -139,8 +135,7 @@ const Dishesform: FC = () => {
                                 {props => (
                                     <>
                                         <Input type='range' min={1} max={10} step={1} onChange={props.input.onChange} value={props.input.value} />
-                                        {props.meta.error && props.meta.touched && <span>{props.meta.error}</span>}
-                                        {<span>{errorMessage?.spiciness_scale}</span>}
+                                        <Error name='range' errorMessage={errorMessage}/>
                                     </>
                                 )}
                             </Field>
@@ -154,8 +149,7 @@ const Dishesform: FC = () => {
                                 {props => (
                                     <>
                                         <Input id='slices_of_bread' type='number' onChange={props.input.onChange} value={props.input.value} />
-                                        {props.meta.error && props.meta.touched && <span>{props.meta.error}</span>}
-                                        {<span>{errorMessage?.slices_of_bread}</span>}
+                                        <Error name='slices_of_bread' errorMessage={errorMessage}/>
                                     </>
                                 )}
                             </Field>
