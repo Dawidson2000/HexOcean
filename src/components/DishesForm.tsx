@@ -31,7 +31,6 @@ const Dishesform: FC = () => {
 
     const onSubmit = async (values: Dish, form: FormApi<Dish, Partial<Dish>>, ) => {
         const applyResponse = (obj: any) => {
-            console.log(obj);       
             form.restart();
         };
         
@@ -62,7 +61,7 @@ const Dishesform: FC = () => {
     return (
         <Form
             onSubmit={onSubmit}
-            render={({ handleSubmit, form}) => (
+            render={({ handleSubmit}) => (
                 <StyledForm onSubmit={handleSubmit}>
                     <InputWrapper>
                         <label>Name</label>
@@ -157,7 +156,8 @@ const Dishesform: FC = () => {
                         </InputWrapper>
                     </Condition>
 
-                    <SubmitButton type='submit'>{isLoading ? <LoadingScreen/> : 'Submit'}</SubmitButton>
+                    <SubmitButton type='submit'>Submit</SubmitButton>
+                    {isLoading && <LoadingScreen/>}
                 </StyledForm>
             )}
         />

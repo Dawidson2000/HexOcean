@@ -1,13 +1,12 @@
-import React from 'react';
-import styled from 'styled-components';
 import Dishesform from './components/DishesForm';
-import { Colors } from './styledHelpers/Colors';
+import GlobalStyle from './styledHelpers/GlobalStyles';
 
 function App() {
   return (
-    <div>
-      <Dishesform/>
-    </div>
+    <>
+      <GlobalStyle/>
+      <Dishesform />
+    </>
   );
 }
 
