@@ -16,6 +16,6 @@ Npm: 8.1.0
 
 # Needed time to perform the task
 
-With learning and reading redux-final-form docs it took about 6 hours.
+Task took about 6 hours with learning and reading redux-final-form docs.
 
 
